@@ -1,9 +1,7 @@
-"""Issue #5520 — generate_image had no native function schema.
+"""Native image calls must match the server schema and provide a prompt.
 
-The tool exists in the fenced-block prompt, the executor, and the image_gen MCP
-server, but not in FUNCTION_TOOL_SCHEMAS. API models (native function calling)
-are only sent schemas from that list, so they could never call it and improvised
-malformed text calls instead.
+A missing prompt must be rejected before the fallback line parser mistakes the
+whole arguments object for the requested image.
 """
 
 import json
