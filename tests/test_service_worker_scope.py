@@ -9,6 +9,7 @@ controls nothing.
 
 import json
 import os
+import re
 import subprocess
 import sys
 import textwrap
@@ -19,7 +20,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_registration_asks_for_root_scope():
     html = (ROOT / "static" / "index.html").read_text(encoding="utf-8")
-    assert "navigator.serviceWorker.register('/static/sw.js',{scope:'/'})" in html
+    assert re.search(
+        r"navigator\.serviceWorker\.register\('/static/sw\.js(?:\?[^']*)?',\{scope:'/'\}\)",
+        html,
+    )
 
 
 def test_only_the_worker_response_widens_its_scope(tmp_path):
